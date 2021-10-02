@@ -5,15 +5,15 @@ import java.util.List;
 
 import com.supermarket.bestchoice.domain.Categorie;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/categories")
 public class CategorieResource {
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	public List<Categorie> list() {
 		Categorie cat1 = new Categorie(1, "Fruits");
 		Categorie cat2 = new Categorie(2, "Vegetables");
