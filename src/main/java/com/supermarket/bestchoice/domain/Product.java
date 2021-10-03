@@ -8,19 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
-
-import javax.persistence.JoinColumn;
-
-
+import lombok.NoArgsConstructor;
 
 
 @Entity
-@Data
+@Data @NoArgsConstructor
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -32,6 +31,7 @@ public class Product implements Serializable {
     private String description;
     
     @ManyToMany
+    @JsonBackReference
     @JoinTable(
 		name="PRODUCT_CATEGORIE"
 		, joinColumns = @JoinColumn(name="ID_CATEGORIE")
@@ -44,4 +44,5 @@ public class Product implements Serializable {
         this.name = name;
         this.description = description;
     }
+
 }
