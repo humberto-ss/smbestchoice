@@ -3,9 +3,13 @@ package com.supermarket.bestchoice;
 import java.util.Arrays;
 
 import com.supermarket.bestchoice.domain.Categorie;
+import com.supermarket.bestchoice.domain.City;
 import com.supermarket.bestchoice.domain.Product;
+import com.supermarket.bestchoice.domain.State;
 import com.supermarket.bestchoice.repositories.CategorieRepository;
+import com.supermarket.bestchoice.repositories.CityRepository;
 import com.supermarket.bestchoice.repositories.ProductRepository;
+import com.supermarket.bestchoice.repositories.StateRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,11 +25,48 @@ public class BestchoiceApplication implements CommandLineRunner{
 	@Autowired
 	private ProductRepository productRepository;
 
+	@Autowired
+	private StateRepository stateRepository;
+
+	@Autowired
+	private CityRepository cityRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(BestchoiceApplication.class, args);
 	}
 
 	public void run(String... s) throws Exception{
+
+		createProductsAndCategories();
+		createStateAndCities();
+	}
+
+	private void createStateAndCities(){
+		State s1 = new State(null, "Rio Grande do Sul");
+		State s2 = new State(null, "Santa Catarina");
+		State s3 = new State(null, "Paraná");
+
+		City c1 = new City(null, "Porto Alegre", s1);
+		City c2 = new City(null, "Canoas", s1);
+		City c3 = new City(null, "Gravatai", s1);
+		
+		City c4 = new City(null, "Florianopolis", s2);
+		City c5 = new City(null, "Criciuma", s2);
+		City c6 = new City(null, "Garopaba", s2);
+
+		City c7 = new City(null, "Curitiba", s3);
+		City c8 = new City(null, "Ilha Bela", s3);
+
+		s1.getCities().addAll(Arrays.asList(c1,c2,c3));
+		s2.getCities().addAll(Arrays.asList(c4,c5,c6));
+		s3.getCities().addAll(Arrays.asList(c7,c8));
+
+		stateRepository.saveAll(Arrays.asList(s1,s2,s3));
+		cityRepository.saveAll(Arrays.asList(c1,c2,c3,c4,c5,c6,c7,c8));
+
+	}
+
+	private void createProductsAndCategories(){
 		Categorie cat1 = new Categorie(null, "Fruits");
 		Categorie cat2 = new Categorie(null, "Vegetables");
 		Categorie cat3 = new Categorie(null, "Eletronics");
@@ -48,5 +89,4 @@ public class BestchoiceApplication implements CommandLineRunner{
 		
 		productRepository.saveAll(Arrays.asList(p1,p2,p3));
 	}
-
 }
